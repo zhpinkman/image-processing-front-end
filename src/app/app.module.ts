@@ -46,9 +46,10 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatTreeModule } from "@angular/material/tree";
 import { MainComponentComponent } from "./main-component/main-component.component";
 import { InnerPartComponent } from "./inner-part/inner-part.component";
+import { UploadHandlerDirective } from './upload-handler.directive';
 
 @NgModule({
-  declarations: [AppComponent, MainComponentComponent, InnerPartComponent],
+  declarations: [AppComponent, MainComponentComponent, InnerPartComponent, UploadHandlerDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,

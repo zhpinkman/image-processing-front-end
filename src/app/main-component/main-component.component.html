@@ -10,7 +10,8 @@
           <mat-icon (click)="snav.toggle()">menu</mat-icon>
         </button>
         <span class="menu-spacer"></span>
-        <div>
+        <div class="toolbar-links" *ngIf="pageWidth > 1200">
+          {{ pageWidth }}
           <a mat-button [routerLink]="'/accounts'"> خانه </a>
           <a mat-button [routerLink]="'/create-account'"> رنگی سازی </a>
           <a mat-button [routerLink]="'/contacts'"> بالا بردن وضوح </a>
@@ -45,58 +46,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <p *ngFor="let content of fillerContent">{{ content }}</p>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-<!-- <div class="main-container" [class.main-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="main-toolbar">
-    <mat-toolbar-row>
-      <button mat-icon-button>
-        <mat-icon (click)="snav.toggle()">menu</mat-icon>
-      </button>
-      <h1 class="app-name">image processing app</h1>
-      <span class="menu-spacer"></span>
-      <div>
-        <a mat-button [routerLink]="'/accounts'"> خانه </a>
-        <a mat-button [routerLink]="'/create-account'"> رنگی سازی </a>
-        <a mat-button [routerLink]="'/contacts'"> بالا بردن وضوح </a>
-        <a mat-button [routerLink]="'/create-contact'"> HDR </a>
-        <a mat-button [routerLink]="'/activities'"> حذف زمینه </a>
-        <a mat-button [routerLink]="'/create-activity'"> تغییر زمینه </a>
-        <a mat-button [routerLink]="'/create-activity'"> حذف اشیا </a>
-        <a mat-button [routerLink]="'/create-activity'"> تغییر سبک </a>
-      </div>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <mat-sidenav-container
-    class="main-sidenav-container"
-    [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
-  >
-    <mat-sidenav
-      #snav
-      [mode]="mobileQuery.matches ? 'over' : 'side'"
-      [fixedInViewport]="mobileQuery.matches"
-      fixedTopGap="56"
-    >
-      <mat-nav-list>
-        <a mat-list-item [routerLink]="'/accounts'"> خانه </a>
-        <a mat-list-item [routerLink]="'/create-account'"> رنگی سازی </a>
-        <a mat-list-item [routerLink]="'/contacts'"> بالا بردن وضوح </a>
-        <a mat-list-item [routerLink]="'/create-contact'"> HDR </a>
-        <a mat-list-item [routerLink]="'/activities'"> حذف زمینه </a>
-        <a mat-list-item [routerLink]="'/create-activity'"> تغییر زمینه </a>
-        <a mat-list-item [routerLink]="'/create-activity'"> حذف اشیا </a>
-        <a mat-list-item [routerLink]="'/create-activity'"> تغییر سبک </a>
-        <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item
-          >Close</a
-        >
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <div style="height: 88vh;">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div> -->

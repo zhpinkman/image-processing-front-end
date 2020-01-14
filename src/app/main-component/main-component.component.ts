@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
 import { ChangeDetectorRef, OnDestroy } from "@angular/core";
 
@@ -19,6 +19,13 @@ export class MainComponentComponent implements OnInit, OnDestroy {
     "حذف اشیا",
     "تغییر سبک"
   ];
+
+  pageWidth: any;
+
+  @HostListener("window:resize", ["$event"])
+  onResize(event) {
+    this.pageWidth = window.innerWidth;
+  }
 
   fillerContent = [];
 

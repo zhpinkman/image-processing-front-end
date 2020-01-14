@@ -1,1 +1,19 @@
-<p>inner-part works!</p>
+<div
+  class="uploadfilecontainer"
+  (click)="fileInput.click()"
+  appUploadHandler
+  (onFileDropped)="uploadFile($event)"
+>
+  <input
+    hidden
+    type="file"
+    #fileInput
+    (change)="uploadFile($event.target.files)"
+  />
+</div>
+<div class="files-list" *ngFor="let file of files; let i = index">
+  <p class="file-item-name">{{ file }}</p>
+  <button class="delete-file" (click)="deleteAttachment(i)">
+    <img src="../../assets/images/cloud-upload.png" />
+  </button>
+</div>
