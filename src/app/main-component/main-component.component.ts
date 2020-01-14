@@ -35,11 +35,14 @@ export class MainComponentComponent implements OnInit, OnDestroy {
     this.mobileQuery = media.matchMedia("(max-width: 600px)");
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.pageWidth = window.innerWidth;
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.pageWidth = window.innerWidth;
+  }
 }
