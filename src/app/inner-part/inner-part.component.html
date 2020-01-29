@@ -1,4 +1,5 @@
 <div
+  *ngIf="!image_url"
   class="uploadfilecontainer"
   (click)="fileInput.click()"
   appUploadHandler
@@ -8,8 +9,13 @@
     hidden
     type="file"
     #fileInput
-    (change)="uploadFile($event.target.files)"
+    (change)="uploadFile($event.target.files[0])"
   />
+</div>
+<div>
+  <div class="image-preview" *ngIf="image_url">
+    <img src="{{ image_url }}" alt="" />
+  </div>
 </div>
 <div class="files-list" *ngFor="let file of files; let i = index">
   <p class="file-item-name">{{ file }}</p>

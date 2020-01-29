@@ -46,11 +46,59 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatTreeModule } from "@angular/material/tree";
 import { MainComponentComponent } from "./main-component/main-component.component";
 import { InnerPartComponent } from "./inner-part/inner-part.component";
-import { UploadHandlerDirective } from './upload-handler.directive';
+import { UploadHandlerDirective } from "./upload-handler.directive";
+import { NotifierModule, NotifierOptions } from "angular-notifier";
+
+const customNotifierOptions: NotifierOptions = {
+  position: {
+    horizontal: {
+      position: "left",
+      distance: 12
+    },
+    vertical: {
+      position: "bottom",
+      distance: 12,
+      gap: 10
+    }
+  },
+  theme: "material",
+  behaviour: {
+    autoHide: 5000,
+    onClick: "hide",
+    onMouseover: "pauseAutoHide",
+    showDismissButton: true,
+    stacking: 4
+  },
+  animations: {
+    enabled: true,
+    show: {
+      preset: "slide",
+      speed: 300,
+      easing: "ease"
+    },
+    hide: {
+      preset: "fade",
+      speed: 300,
+      easing: "ease",
+      offset: 50
+    },
+    shift: {
+      speed: 300,
+      easing: "ease"
+    },
+    overlap: 150
+  }
+};
 
 @NgModule({
-  declarations: [AppComponent, MainComponentComponent, InnerPartComponent, UploadHandlerDirective],
+  declarations: [
+    AppComponent,
+    MainComponentComponent,
+    InnerPartComponent,
+    UploadHandlerDirective
+  ],
   imports: [
+    NotifierModule.withConfig(customNotifierOptions),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
