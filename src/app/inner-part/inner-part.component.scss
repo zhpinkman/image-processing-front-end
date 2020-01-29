@@ -70,3 +70,18 @@
 .shadow-on {
   filter: blur(1px);
 }
+
+.main-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  margin: 0 auto;
+  align-items: center;
+  .image-container {
+  }
+  .options-container {
+  }
+}
+.upload-state {
+  height: 300px;
+}

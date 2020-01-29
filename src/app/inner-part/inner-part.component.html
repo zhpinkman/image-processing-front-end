@@ -1,38 +1,65 @@
 <div
-  *ngIf="!image_url"
-  class="uploadfilecontainer"
-  (click)="fileInput.click()"
-  appUploadHandler
-  (onFileDropped)="uploadFile($event)"
+  class="main-container"
+  [ngClass]="{ 'main-component-upload-state': !image_url }"
 >
-  <input
-    hidden
-    type="file"
-    #fileInput
-    (change)="uploadFile($event.target.files[0])"
-  />
-</div>
-<div>
   <div
-    class="image-preview"
-    *ngIf="image_url"
-    (mouseenter)="mouse_enter()"
-    (mouseleave)="mouse_leave()"
+    class="image-container col-10"
+    [ngClass]="{ 'upload-state': !image_url }"
   >
-    <div class="download-btn" *ngIf="mouse_on_image">
-      <a href="{{ image_url }}" download>
-        <img src="../../assets/images/download.png" alt="" />
-      </a>
+    <div
+      *ngIf="!image_url"
+      class="uploadfilecontainer"
+      (click)="fileInput.click()"
+      appUploadHandler
+      (onFileDropped)="uploadFile($event)"
+    >
+      <input
+        hidden
+        type="file"
+        #fileInput
+        (change)="uploadFile($event.target.files[0])"
+      />
     </div>
-    <div [ngClass]="{ 'shadow-on': mouse_on_image }" class="image">
-      <img src="{{ image_url }}" alt="" />
+    <div>
+      <div
+        class="image-preview"
+        *ngIf="image_url"
+        (mouseenter)="mouse_enter()"
+        (mouseleave)="mouse_leave()"
+      >
+        <div class="download-btn" *ngIf="mouse_on_image">
+          <a href="{{ image_url }}" download>
+            <img src="../../assets/images/download.png" alt="" />
+          </a>
+        </div>
+        <div [ngClass]="{ 'shadow-on': mouse_on_image }" class="image">
+          <img src="{{ image_url }}" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="files-list" *ngFor="let file of files; let i = index">
+      <p class="file-item-name">{{ file.name }}</p>
+      <button class="delete-file" (click)="deleteAttachment(i)">
+        <img src="../../assets/images/remove.png" />
+      </button>
+    </div>
+  </div>
+  <div class="options-container col-2" *ngIf="image_url">
+    <div *ngFor="let option of options">
+      <mat-slider
+        [disabled]="false"
+        [invert]="true"
+        [max]="max"
+        [min]="min"
+        [step]="step"
+        [thumbLabel]="true"
+        [tickInterval]="tickInterval"
+        [(ngModel)]="option"
+        [vertical]="vertical"
+      >
+      </mat-slider>
     </div>
   </div>
 </div>
-<div class="files-list" *ngFor="let file of files; let i = index">
-  <p class="file-item-name">{{ file.name }}</p>
-  <button class="delete-file" (click)="deleteAttachment(i)">
-    <img src="../../assets/images/remove.png" />
-  </button>
-</div>
+
 <notifier-container dir="ltr"></notifier-container>

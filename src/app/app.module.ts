@@ -48,6 +48,7 @@ import { MainComponentComponent } from "./main-component/main-component.componen
 import { InnerPartComponent } from "./inner-part/inner-part.component";
 import { UploadHandlerDirective } from "./upload-handler.directive";
 import { NotifierModule, NotifierOptions } from "angular-notifier";
+import { FormsModule } from "@angular/forms";
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -98,6 +99,7 @@ const customNotifierOptions: NotifierOptions = {
     UploadHandlerDirective
   ],
   imports: [
+    FormsModule,
     NotifierModule.withConfig(customNotifierOptions),
     BrowserModule,
     AppRoutingModule,
