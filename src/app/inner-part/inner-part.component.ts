@@ -15,7 +15,7 @@ export class InnerPartComponent implements OnInit {
   mouse_on_image = false;
   files: any = [];
   image_url: String | ArrayBuffer = "";
-  correct_image_types = ["image/jepg", "image/png"];
+  correct_image_types = ["image/jpeg", "image/png"];
 
   is_file_type_ok(event) {
     if (this.correct_image_types.includes(event.type)) return true;
@@ -26,9 +26,17 @@ export class InnerPartComponent implements OnInit {
     return false;
   }
 
+  is_file_size_ok(event) {
+    if (event.size < 5000000) return true;
+    this.notifier.notify(
+      "error",
+      "file size is greater than the allowable file size ( 5 MB )"
+    );
+  }
+
   uploadFile(event) {
     if (event) {
-      if (!this.is_file_type_ok(event)) return;
+      if (!this.is_file_type_ok(event) || !this.is_file_size_ok(event)) return;
       console.log("TCL: InnerPartComponent -> uploadFile -> event", event);
       this.files.push(event);
       var reader = new FileReader();
