@@ -13,13 +13,26 @@
   />
 </div>
 <div>
-  <div class="image-preview" *ngIf="image_url">
-    <img src="{{ image_url }}" alt="" />
+  <div
+    class="image-preview"
+    *ngIf="image_url"
+    (mouseenter)="mouse_enter()"
+    (mouseleave)="mouse_leave()"
+  >
+    <div class="download-btn" *ngIf="mouse_on_image">
+      <a href="{{ image_url }}" download>
+        <img src="../../assets/images/download.png" alt="" />
+      </a>
+    </div>
+    <div [ngClass]="{ 'shadow-on': mouse_on_image }" class="image">
+      <img src="{{ image_url }}" alt="" />
+    </div>
   </div>
 </div>
 <div class="files-list" *ngFor="let file of files; let i = index">
-  <p class="file-item-name">{{ file }}</p>
+  <p class="file-item-name">{{ file.name }}</p>
   <button class="delete-file" (click)="deleteAttachment(i)">
     <img src="../../assets/images/remove.png" />
   </button>
 </div>
+<notifier-container dir="ltr"></notifier-container>

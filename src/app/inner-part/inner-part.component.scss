@@ -47,8 +47,26 @@
 }
 
 .image-preview {
+  position: relative;
+  transition: all 300ms;
   display: flex;
   justify-content: center;
   margin: 100px auto;
-  align-items: center;
+  width: fit-content;
+  .download-btn {
+    transition: all 300ms;
+    zoom: 7%;
+    align-self: flex-end;
+    z-index: 1000000;
+    position: absolute;
+    right: 500px;
+    bottom: 500px;
+  }
+  .image {
+    transition: all 300ms;
+  }
+}
+
+.shadow-on {
+  filter: blur(1px);
 }
