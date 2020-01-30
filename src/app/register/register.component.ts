@@ -42,7 +42,6 @@ export class RegisterComponent implements OnInit {
 
   repeatPasswordValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      console.log(control);
       if (control.value.password === control.value.repeatPassword) return null;
       return { "repeat password": "no match" };
     };

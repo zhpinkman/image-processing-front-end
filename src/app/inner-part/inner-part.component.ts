@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NotifierService } from "angular-notifier";
 import { ReadVarExpr } from "@angular/compiler";
 import { coerceNumberProperty } from "@angular/cdk/coercion";
+import { UploadService } from "../upload.service";
 
 @Component({
   selector: "app-inner-part",
@@ -9,7 +10,10 @@ import { coerceNumberProperty } from "@angular/cdk/coercion";
   styleUrls: ["./inner-part.component.scss"]
 })
 export class InnerPartComponent implements OnInit {
-  constructor(private notifier: NotifierService) {}
+  constructor(
+    private notifier: NotifierService,
+    private uploadService: UploadService
+  ) {}
 
   autoTicks = false;
   disabled = false;
@@ -69,6 +73,7 @@ export class InnerPartComponent implements OnInit {
         // document.getElementById('image_preview').
       };
       this.notifier.notify("success", "Image uploaded successfully");
+      this.uploadService.uploadFile(this.files[0]);
     }
   }
 
