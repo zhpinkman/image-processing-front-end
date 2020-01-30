@@ -48,7 +48,10 @@ import { MainComponentComponent } from "./main-component/main-component.componen
 import { InnerPartComponent } from "./inner-part/inner-part.component";
 import { UploadHandlerDirective } from "./upload-handler.directive";
 import { NotifierModule, NotifierOptions } from "angular-notifier";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { LoginComponent } from "./login/login.component";
+import { HttpClientModule } from "@angular/common/http";
+import { RegisterComponent } from './register/register.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -96,9 +99,13 @@ const customNotifierOptions: NotifierOptions = {
     AppComponent,
     MainComponentComponent,
     InnerPartComponent,
-    UploadHandlerDirective
+    UploadHandlerDirective,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
+    HttpClientModule,
+    ReactiveFormsModule,
     FormsModule,
     NotifierModule.withConfig(customNotifierOptions),
     BrowserModule,
