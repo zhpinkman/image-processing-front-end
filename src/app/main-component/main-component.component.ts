@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
 import { ChangeDetectorRef, OnDestroy } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-main-component",
@@ -31,7 +32,11 @@ export class MainComponentComponent implements OnInit, OnDestroy {
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    private router: Router
+  ) {
     this.mobileQuery = media.matchMedia("(max-width: 600px)");
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -44,5 +49,10 @@ export class MainComponentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.pageWidth = window.innerWidth;
+  }
+
+  logout() {
+    localStorage.removeItem("userId");
+    this.router.navigate(["login"]);
   }
 }
