@@ -17,7 +17,7 @@ export class UploadService {
 
     this.http
       .post<any>(
-        "http://89.43.10.90:5000/users/uploadForImprove",
+        "http://api.negar.avir.co.com/users/uploadForImprove",
         formData
         // headers: { "content-type": "multipart/formd-ata" }
       )
