@@ -3,6 +3,9 @@ import { NotifierService } from "angular-notifier";
 import { ReadVarExpr } from "@angular/compiler";
 import { coerceNumberProperty } from "@angular/cdk/coercion";
 import { UploadService } from "../upload.service";
+import { PicsService } from "../pics.service";
+import { element } from "protractor";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-inner-part",
@@ -12,7 +15,8 @@ import { UploadService } from "../upload.service";
 export class InnerPartComponent implements OnInit {
   constructor(
     private notifier: NotifierService,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private picsService: PicsService
   ) {}
 
   autoTicks = false;
@@ -34,9 +38,29 @@ export class InnerPartComponent implements OnInit {
   }
   private _tickInterval = 1;
 
-  ngOnInit() {}
+  ngOnInit() {
+    let userId = localStorage.getItem("userId");
+    this.picsService.getPics(userId).subscribe(pics => {
+      if (!pics.success) {
+        this.notifier.notify(
+          "error",
+          "something went wrong getting the previous pics"
+        );
+      }
+      this.images = pics.pics;
+      this.images = this.images.filter(element => {
+        console.log(element.isFailed);
+        return element.isFailed == false;
+      });
+      console.log(
+        "TCL: InnerPartComponent -> ngOnInit -> this.images",
+        this.images
+      );
+    });
+  }
 
   mouse_on_image = false;
+  images: any = [];
   files: any = [];
   image_url: String | ArrayBuffer = "";
   correct_image_types = ["image/jpeg", "image/png"];
@@ -96,5 +120,9 @@ export class InnerPartComponent implements OnInit {
   }
   mouse_leave() {
     this.mouse_on_image = false;
+  }
+
+  openImage(image) {
+    window.open(image.url.toString(), "_blank");
   }
 }
