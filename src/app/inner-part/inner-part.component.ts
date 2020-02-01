@@ -85,7 +85,6 @@ export class InnerPartComponent implements OnInit {
   uploadFile(event) {
     if (event) {
       if (!this.is_file_type_ok(event) || !this.is_file_size_ok(event)) return;
-      console.log("TCL: InnerPartComponent -> uploadFile -> event", event);
       this.files.push(event);
       var reader = new FileReader();
 

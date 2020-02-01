@@ -12,7 +12,7 @@
         class="uploadfilecontainer"
         (click)="fileInput.click()"
         appUploadHandler
-        (onFileDropped)="uploadFile($event)"
+        (onFileDropped)="uploadFile($event[0])"
       >
         <input
           hidden
