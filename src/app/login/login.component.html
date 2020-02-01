@@ -1,4 +1,4 @@
-<div class="col-md-6 offset-md-3 mt-5 login-container" dir="ltr">
+<div class="col-md-6 offset-md-3 mt-5 login-container" dir="rtl">
   <div class="card w-100">
     <h4 class="card-header">Login</h4>
     <div class="card-body">
@@ -27,6 +27,15 @@
             <div *ngIf="f.password.errors.required">Password is required</div>
           </div>
         </div>
+
+        <button [disabled]="loading" class="btn btn-primary" [routerLink]="'/register'" style="margin-left:10px">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Register
+        </button>
+
         <button [disabled]="loading" class="btn btn-primary">
           <span
             *ngIf="loading"
