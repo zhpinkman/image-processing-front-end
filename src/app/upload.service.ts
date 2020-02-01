@@ -15,12 +15,10 @@ export class UploadService {
     formData.append("userId", userId);
     formData.append("type", "improver");
 
-    this.http
-      .post<any>(
-        "http://89.43.10.90:5000/users/uploadForImprove",
-        formData
-        // headers: { "content-type": "multipart/formd-ata" }
-      )
-      .subscribe(userData => console.log(userData));
+    return this.http.post<any>(
+      "http://89.43.10.90:5000/users/uploadForImprove",
+      formData
+      // headers: { "content-type": "multipart/formd-ata" }
+    );
   }
 }

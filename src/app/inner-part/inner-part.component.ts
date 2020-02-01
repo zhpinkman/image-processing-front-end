@@ -19,6 +19,7 @@ export class InnerPartComponent implements OnInit {
     private picsService: PicsService
   ) {}
 
+  loading = false;
   autoTicks = false;
   disabled = false;
   invert = false;
@@ -57,11 +58,14 @@ export class InnerPartComponent implements OnInit {
         this.images
       );
     });
+    // this.uploadedImageName = "slide3-l.jpg";
+    // this.waitForResult();
   }
 
+  uploadedImageName: string;
   mouse_on_image = false;
   images: any = [];
-  files: any = [];
+  file: any;
   image_url: String | ArrayBuffer = "";
   correct_image_types = ["image/jpeg", "image/png"];
 
@@ -85,7 +89,7 @@ export class InnerPartComponent implements OnInit {
   uploadFile(event) {
     if (event) {
       if (!this.is_file_type_ok(event) || !this.is_file_size_ok(event)) return;
-      this.files.push(event);
+      this.loading = true;
       var reader = new FileReader();
 
       reader.readAsDataURL(event); // read file as data url
@@ -95,9 +99,91 @@ export class InnerPartComponent implements OnInit {
         this.image_url = event.target.result;
         // document.getElementById('image_preview').
       };
-      this.notifier.notify("success", "Image uploaded successfully");
-      this.uploadService.uploadFile(this.files[0]);
+      // this.notifier.notify("success", "Image uploaded successfully");
+      console.log("TCL: InnerPartComponent -> uploadFile -> event", event);
+      this.uploadService.uploadFile(event).subscribe(resp => {
+        if (resp.success)
+          this.notifier.notify(
+            "success",
+            "image uploaded successfully waiting for the result"
+          );
+      });
+      this.uploadedImageName = event.name;
+      this.waitForResult();
     }
+  }
+
+  waitForResult() {
+    console.log(
+      "TCL: InnerPartComponent -> waitForResult -> ",
+      "start waiting for the pic to be uploaded"
+    );
+    let timeOut = setTimeout(() => {
+      clearInterval(timerId);
+      this.uploadedImageName = "";
+      this.notifier.notify(
+        "error",
+        "some thing went wrong with uploading the image"
+      );
+      this.loading = false;
+      console.log(
+        "TCL: InnerPartComponent -> waitForResult -> ",
+        "timer stopped"
+      );
+    }, 10000);
+    let timerId = setInterval(() => {
+      let userId = localStorage.getItem("userId");
+      this.picsService.getPics(userId).subscribe(pics => {
+        if (
+          pics.pics.some(pic => {
+            console.log(
+              "TCL: InnerPartComponent -> timerId -> pic",
+              pic.originalName,
+              this.uploadedImageName
+            );
+            return pic.originalName == this.uploadedImageName;
+          })
+        ) {
+          clearInterval(timerId);
+
+          // console.log(
+          //   "TCL: InnerPartComponent -> timerId -> ",
+          //   "time stopped by request success"
+          // );
+          this.images = pics.pics;
+          let successfull = false;
+          this.images = this.images.filter(element => {
+            // console.log(
+            //   "TCL: InnerPartComponent -> timerId -> element",
+            //   element
+            // );
+            if (
+              this.uploadedImageName == element.originalName &&
+              element.isFailed == false
+            ) {
+              successfull = true;
+            }
+            return element.isFailed == false;
+          });
+          if (successfull) {
+            this.notifier.notify(
+              "success",
+              "image successfully improved by the app"
+            );
+          } else {
+            this.notifier.notify(
+              "error",
+              "image failed to be improved by the app"
+            );
+          }
+          this.uploadedImageName = "";
+          this.loading = false;
+          clearTimeout(timeOut);
+          return;
+        }
+      });
+      console.log("TCL: InnerPartComponent -> timerId -> ", "timer is working");
+    }, 2000);
   }
 
   downloadFile() {
@@ -108,11 +194,11 @@ export class InnerPartComponent implements OnInit {
     window.open(<string>this.image_url, "_blank");
   }
 
-  deleteAttachment(index) {
-    this.files.splice(index, 1);
-    this.image_url = "";
-    this.notifier.notify("success", "Image removed successfully");
-  }
+  // deleteAttachment(index) {
+  //   this.files.splice(index, 1);
+  //   this.image_url = "";
+  //   this.notifier.notify("success", "Image removed successfully");
+  // }
 
   mouse_enter() {
     this.mouse_on_image = true;

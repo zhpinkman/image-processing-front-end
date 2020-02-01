@@ -10,15 +10,15 @@ import { Router } from "@angular/router";
 })
 export class MainComponentComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
-  fillerNav = [
-    "خانه",
-    "رنگی سازی",
-    "بالا بردن وضوح",
-    "HDR",
-    "حذف زمینه",
-    "تغییر زمینه",
-    "حذف اشیا",
-    "تغییر سبک"
+  fillerNav: { name: string; url: string }[] = [
+    { name: "خانه", url: "" },
+    { name: "رنگی سازی", url: "/colorize" },
+    { name: "بالا بردن وضوح", url: "/improver" },
+    { name: "HDR", url: "hdr" },
+    { name: "حذف زمینه", url: "bgremover" },
+    { name: "تغییر زمینه", url: "bgchanger" },
+    { name: "حذف اشیا", url: "thingsremover" },
+    { name: "تغییر سبک", url: "stylechanger" }
   ];
 
   pageWidth: any;

@@ -11,14 +11,14 @@
         </button>
         <span class="menu-spacer"></span>
         <div class="toolbar-links" *ngIf="pageWidth > 1200">
-          <a mat-button [routerLink]="'/accounts'"> خانه </a>
-          <a mat-button [routerLink]="'/create-account'"> رنگی سازی </a>
-          <a mat-button [routerLink]="'/contacts'"> بالا بردن وضوح </a>
-          <a mat-button [routerLink]="'/create-contact'"> HDR </a>
-          <a mat-button [routerLink]="'/activities'"> حذف زمینه </a>
-          <a mat-button [routerLink]="'/create-activity'"> تغییر زمینه </a>
-          <a mat-button [routerLink]="'/create-activity'"> حذف اشیا </a>
-          <a mat-button [routerLink]="'/create-activity'"> تغییر سبک </a>
+          <a mat-button [routerLink]="''"> خانه </a>
+          <a mat-button [routerLink]="'/colorize'"> رنگی سازی </a>
+          <a mat-button [routerLink]="'/improver'"> بالا بردن وضوح </a>
+          <a mat-button [routerLink]="'/hdr'"> HDR </a>
+          <a mat-button [routerLink]="'/bgremover'"> حذف زمینه </a>
+          <a mat-button [routerLink]="'/bgchanger'"> تغییر زمینه </a>
+          <a mat-button [routerLink]="'/thingsremover'"> حذف اشیا </a>
+          <a mat-button [routerLink]="'/stylechanger'"> تغییر سبک </a>
         </div>
       </div>
       <div>
@@ -38,9 +38,12 @@
       fixedTopGap="56"
     >
       <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{
-          nav
-        }}</a>
+        <a
+          mat-list-item
+          routerLink="{{ nav.url }}"
+          *ngFor="let nav of fillerNav"
+          >{{ nav.name }}</a
+        >
       </mat-nav-list>
     </mat-sidenav>
 
