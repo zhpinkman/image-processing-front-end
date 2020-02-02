@@ -130,7 +130,7 @@ export class InnerPartComponent implements OnInit {
         "TCL: InnerPartComponent -> waitForResult -> ",
         "timer stopped"
       );
-    }, 10000);
+    }, 20000);
     let timerId = setInterval(() => {
       let userId = localStorage.getItem("userId");
       this.picsService.getPics(userId).subscribe(pics => {
