@@ -9,12 +9,14 @@ import { Router } from "@angular/router";
 export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
+  baseUrl = "http://89.43.10.90:5000";
+
   login(user: { username: string; password: string }) {
     let username = user.username;
     let password = user.password;
     console.log("TCL: AuthService -> login -> user", user);
     this.http
-      .post<any>("http://89.43.10.90:5000/users/login", { username, password })
+      .post<any>(this.baseUrl + "/users/login", { username, password })
       .subscribe(user => {
         console.log("TCL: AuthService -> login -> user", user);
         localStorage.setItem("userId", user.user.id);
@@ -34,7 +36,7 @@ export class AuthService {
     let usage = "";
     console.log("TCL: user", user);
     this.http
-      .post<any>("http://89.43.10.90:5000/users/register", {
+      .post<any>(this.baseUrl + "/users/register", {
         username,
         password,
         job,

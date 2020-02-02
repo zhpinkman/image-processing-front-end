@@ -8,6 +8,8 @@ import { HttpClient } from "@angular/common/http";
 export class UploadService {
   constructor(private router: Router, private http: HttpClient) {}
 
+  baseUrl = "http://89.43.10.90:5000";
+
   uploadFile(file: File) {
     let userId = localStorage.getItem("userId");
     let formData = new FormData();
@@ -16,7 +18,7 @@ export class UploadService {
     formData.append("type", "improver");
 
     return this.http.post<any>(
-      "http://89.43.10.90:5000/users/uploadForImprove",
+      this.baseUrl + "/users/uploadForImprove",
       formData
       // headers: { "content-type": "multipart/formd-ata" }
     );
