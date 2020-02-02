@@ -1,10 +1,10 @@
-<div class="col-md-6 offset-md-3 mt-5 register-container" dir="ltr">
+<div class="col-md-6 offset-md-3 mt-5 register-container text-right" dir="ltr">
   <div class="card w-100">
-    <h4 class="card-header">Register</h4>
+    <h4 class="card-header">ایجاد حساب</h4>
     <div class="card-body">
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">نام کاربری</label>
           <input
             type="text"
             formControlName="username"
@@ -12,11 +12,11 @@
             [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
           />
           <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
+            <div *ngIf="f.username.errors.required">نام کاربری اجباری است</div>
           </div>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">رمز عبور</label>
           <input
             type="password"
             formControlName="password"
@@ -24,11 +24,11 @@
             [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
           />
           <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.required">رمز عبور اجباری است</div>
           </div>
         </div>
         <div class="form-group">
-          <label for="repeatPassword">Repeat Password</label>
+          <label for="repeatPassword">تکرار رمز عبور</label>
           <input
             type="password"
             formControlName="repeatPassword"
@@ -40,12 +40,12 @@
             class="invalid-feedback"
           >
             <div *ngIf="f.repeatPassword.errors.required">
-              Repeating Password is required
+              تکرار رمز عبور اجباری است
             </div>
           </div>
         </div>
         <div class="form-group">
-          <label for="job">Job</label>
+          <label for="job">شغل</label>
           <input
             type="text"
             formControlName="job"
@@ -53,11 +53,11 @@
             [ngClass]="{ 'is-invalid': submitted && f.job.errors }"
           />
           <div *ngIf="submitted && f.job.errors" class="invalid-feedback">
-            <div *ngIf="f.job.errors.required">Job is required</div>
+            <div *ngIf="f.job.errors.required">شغل اجباری است</div>
           </div>
         </div>
         <div class="form-group">
-          <label for="usage">Usage</label>
+          <label for="usage">مورد استفاده</label>
           <input
             type="text"
             formControlName="usage"
@@ -65,7 +65,7 @@
             [ngClass]="{ 'is-invalid': submitted && f.usage.errors }"
           />
           <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.usage.errors.required">Usage is required</div>
+            <div *ngIf="f.usage.errors.required">مورد استفاده اجباری است</div>
           </div>
         </div>
         <button
@@ -76,14 +76,14 @@
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"
           ></span>
-          Register
+          ایجاد حساب
         </button>
         <button class="btn btn-primary mx-3" [routerLink]="['/login']">
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"
           ></span>
-          login
+          ورود
         </button>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
           {{ error }}

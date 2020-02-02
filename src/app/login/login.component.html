@@ -1,10 +1,10 @@
-<div class="col-md-6 offset-md-3 mt-5 login-container" dir="ltr">
+<div class="col-md-6 offset-md-3 mt-5 login-container text-right" dir="ltr">
   <div class="card w-100">
-    <h4 class="card-header">Login</h4>
+    <h4 class="card-header">ورود</h4>
     <div class="card-body">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">نام کاربری</label>
           <input
             type="text"
             formControlName="username"
@@ -12,11 +12,11 @@
             [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
           />
           <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
+            <div *ngIf="f.username.errors.required">نام کاربری اجباری است</div>
           </div>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">رمز عبور</label>
           <input
             type="password"
             formControlName="password"
@@ -24,7 +24,7 @@
             [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
           />
           <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.required">رمز عبور اجباری است</div>
           </div>
         </div>
         <button
@@ -35,14 +35,14 @@
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"
           ></span>
-          Login
+          ورود
         </button>
         <button class="btn btn-primary mx-3" [routerLink]="['/register']">
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"
           ></span>
-          register
+          ایجاد حساب
         </button>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
           {{ error }}
