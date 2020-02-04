@@ -1,4 +1,4 @@
-import { Component, OnInit, Input  } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { NotifierService } from "angular-notifier";
 import { ReadVarExpr } from "@angular/compiler";
 import { coerceNumberProperty } from "@angular/cdk/coercion";
@@ -17,7 +17,12 @@ export class InnerPartComponent implements OnInit {
     private notifier: NotifierService,
     private uploadService: UploadService,
     private picsService: PicsService
-  ) {}
+  ) {
+    this.picsService.refreshPics.subscribe(refresh => {
+      console.log("TCL: InnerPartComponent ->", "picsReloaded");
+      this.reloadPics();
+    });
+  }
 
   @Input() uploadType: string;
 
@@ -55,10 +60,7 @@ export class InnerPartComponent implements OnInit {
         console.log(element.isFailed);
         return element.isFailed == false && element.isReady == true;
       });
-      console.log(
-        "TCL: InnerPartComponent -> ngOnInit -> this.images",
-        this.images
-      );
+      console.log(this.images);
     });
     // this.uploadedImageName = "slide3-l.jpg";
     // this.waitForResult();
@@ -90,6 +92,7 @@ export class InnerPartComponent implements OnInit {
 
   uploadFile(event) {
     if (event) {
+      console.log("test");
       if (!this.is_file_type_ok(event) || !this.is_file_size_ok(event)) return;
       this.loading = true;
       var reader = new FileReader();
@@ -102,106 +105,116 @@ export class InnerPartComponent implements OnInit {
         // document.getElementById('image_preview').
       };
       // this.notifier.notify("success", "Image uploaded successfully");
-      console.log("TCL: InnerPartComponent -> uploadFile -> event", event);
+      console.log(1);
+      console.log(event, this.uploadType);
+      if (this.uploadType == "ermia") {
+        this.notifier.notify(
+          "error",
+          "please choose one of the methods for processing your uploaded image first"
+        );
+        this.loading = false;
+        return;
+      }
       this.uploadService.uploadFile(event, this.uploadType).subscribe(resp => {
-        if (resp.success)
+        console.log(2);
+        if (resp.success) {
           this.notifier.notify(
             "success",
             "image uploaded successfully waiting for the result"
           );
+          this.uploadedImageName = event.name;
+          this.waitForResult();
+        } else if (!resp.success) {
+          this.notifier.notify(
+            "error",
+            "something went wrong in uploading the file"
+          );
+        }
       });
-      this.uploadedImageName = event.name;
-      this.waitForResult();
     }
   }
 
+  reloadPics() {
+    let userId = localStorage.getItem("userId");
+    this.picsService.getPics(userId).subscribe(pics => {
+      this.images = pics.pics;
+      this.images = this.images.filter(element => {
+        return element.isFailed == false && element.isReady == true;
+      });
+      this.notifier.notify("success", "images have been successfully reloaded");
+    });
+  }
+
   waitForResult() {
-    console.log(
-      "TCL: InnerPartComponent -> waitForResult -> ",
-      "start waiting for the pic to be uploaded"
-    );
     let timeOut = setTimeout(() => {
-      clearInterval(timerId);
-      this.uploadedImageName = "";
-      this.notifier.notify(
-        "error",
-        "some thing went wrong with uploading the image"
-      );
-      this.loading = false;
-      console.log(
-        "TCL: InnerPartComponent -> waitForResult -> ",
-        "timer stopped"
-      );
-    }, 20000);
-    let timerId = setInterval(() => {
       let userId = localStorage.getItem("userId");
       this.picsService.getPics(userId).subscribe(pics => {
+        this.images = pics.pics;
+        this.images = this.images.filter(element => {
+          return element.isFailed == false && element.isReady == true;
+        });
         if (
-          pics.pics.some(pic => {
-            console.log(
-              "TCL: InnerPartComponent -> timerId -> pic",
-              pic.originalName,
-              this.uploadedImageName
-            );
+          this.images.some(pic => {
             return pic.originalName == this.uploadedImageName;
           })
-        ) {
-          clearInterval(timerId);
-
-          // console.log(
-          //   "TCL: InnerPartComponent -> timerId -> ",
-          //   "time stopped by request success"
-          // );
-          this.images = pics.pics;
-          let successfull = false;
-          this.images = this.images.filter(element => {
-            // console.log(
-            //   "TCL: InnerPartComponent -> timerId -> element",
-            //   element
-            // );
-            if (
-              this.uploadedImageName == element.originalName &&
-              element.isFailed == false
-            ) {
-              successfull = true;
-            }
-            return element.isFailed == false && element.isReady == true;
-          });
-          if (successfull) {
-            this.notifier.notify(
-              "success",
-              "image successfully improved by the app"
-            );
-          } else {
-            this.notifier.notify(
-              "error",
-              "image failed to be improved by the app"
-            );
-          }
-          this.uploadedImageName = "";
-          this.loading = false;
-          clearTimeout(timeOut);
-          return;
-        }
+        )
+          this.notifier.notify(
+            "success",
+            "uploaded image have been successfully processed"
+          );
+        this.uploadedImageName = "";
+        this.loading = false;
       });
-      console.log("TCL: InnerPartComponent -> timerId -> ", "timer is working");
-    }, 20000);
+    }, 10000);
+    // let timerId = setInterval(() => {
+    //   let userId = localStorage.getItem("userId");
+    //   this.picsService.getPics(userId).subscribe(pics => {
+    //     if (
+    //       pics.pics.some(pic => {
+    //         return pic.originalName == this.uploadedImageName;
+    //       })
+    //     ) {
+    //       clearInterval(timerId);
+
+    //       this.images = pics.pics;
+    //       let successfull = false;
+    //       this.images = this.images.filter(element => {
+    //         if (
+    //           this.uploadedImageName == element.originalName &&
+    //           element.isFailed == false
+    //         ) {
+    //           successfull = true;
+    //         }
+    //         return element.isFailed == false && element.isReady == true;
+    //       });
+    //       if (successfull) {
+    //         this.notifier.notify(
+    //           "success",
+    //           "image successfully improved by the app"
+    //         );
+    //       } else {
+    //         this.notifier.notify(
+    //           "error",
+    //           "image failed to be improved by the app"
+    //         );
+    //       }
+    //       this.uploadedImageName = "";
+    //       this.loading = false;
+    //       clearTimeout(timeOut);
+    //       return;
+    //     }
+    //   });
+    // }, 20000);
   }
 
   downloadFile() {
-    console.log(
-      "TCL: InnerPartComponent -> downloadFile -> this.image_url",
-      this.image_url
-    );
     window.open(<string>this.image_url, "_blank");
   }
 
-  getType(type:string){
-    if( type == 'hdr')
-      return 'HDR'
-    if( type=='coloring')
-        return 'رنگ آمیزی'
-    return 'HDR'
+  getType(type: string) {
+    if (type == "hdr") return "HDR";
+    if (type == "coloring") return "رنگ آمیزی";
+    return "HDR";
   }
   // deleteAttachment(index) {
   //   this.files.splice(index, 1);

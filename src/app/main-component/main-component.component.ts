@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
 import { ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
+import { PicsService } from "../pics.service";
 
 @Component({
   selector: "app-main-component",
@@ -34,7 +35,8 @@ export class MainComponentComponent implements OnInit, OnDestroy {
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private router: Router
+    private router: Router,
+    private picsService: PicsService
   ) {
     this.mobileQuery = media.matchMedia("(max-width: 600px)");
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -54,5 +56,9 @@ export class MainComponentComponent implements OnInit, OnDestroy {
     localStorage.removeItem("userId");
     localStorage.removeItem("userActive");
     this.router.navigate(["login"]);
+  }
+
+  refresh() {
+    this.picsService.refreshPics.next(true);
   }
 }

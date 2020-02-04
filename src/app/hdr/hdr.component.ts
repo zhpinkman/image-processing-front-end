@@ -2,14 +2,13 @@ import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
 import { ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
+import { PicsService } from "../pics.service";
 
 @Component({
-  selector: 'app-hdr',
-  templateUrl: './hdr.component.html',
-  styleUrls: ['./hdr.component.scss']
+  selector: "app-hdr",
+  templateUrl: "./hdr.component.html",
+  styleUrls: ["./hdr.component.scss"]
 })
-
-
 export class HdrComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
   fillerNav: { name: string; url: string }[] = [
@@ -36,7 +35,8 @@ export class HdrComponent implements OnInit, OnDestroy {
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private router: Router
+    private router: Router,
+    private picsService: PicsService
   ) {
     this.mobileQuery = media.matchMedia("(max-width: 600px)");
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -55,5 +55,8 @@ export class HdrComponent implements OnInit, OnDestroy {
   logout() {
     localStorage.removeItem("userId");
     this.router.navigate(["login"]);
+  }
+  refresh() {
+    this.picsService.refreshPics.next(true);
   }
 }

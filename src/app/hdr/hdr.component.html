@@ -6,8 +6,12 @@
   <mat-toolbar color="primary" class="main-toolbar">
     <mat-toolbar-row class="justify-content-between ">
       <div class="d-flex">
-        <button mat-icon-button *ngIf="pageWidth <= 1200" (click)="snav.toggle()">
-          <mat-icon >menu</mat-icon>
+        <button
+          mat-icon-button
+          *ngIf="pageWidth <= 1200"
+          (click)="snav.toggle()"
+        >
+          <mat-icon>menu</mat-icon>
         </button>
         <span class="menu-spacer"></span>
         <div class="toolbar-links" *ngIf="pageWidth > 1200">
@@ -19,8 +23,15 @@
           <a mat-button [routerLink]="'/stylechanger'"> تغییر سبک </a>
         </div>
       </div>
-      <div>
-        <span class="logout" (click)="logout()">خروج</span>
+      <div class="d-flex flex-row-reverse align-items-center">
+        <span class="logout mx-4" (click)="logout()">خروج</span>
+        <div class="refresh-icon">
+          <img
+            src="../../assets/images/refresh.png"
+            alt=""
+            (click)="refresh()"
+          />
+        </div>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -45,7 +56,9 @@
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content style="text-align:right; padding-right: 20px;padding-top:40px">
+    <mat-sidenav-content
+      style="text-align:right; padding-right: 20px;padding-top:40px"
+    >
       <h4>HDR</h4>
       <app-inner-part uploadType="hdr"></app-inner-part>
     </mat-sidenav-content>

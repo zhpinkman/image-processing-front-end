@@ -14,7 +14,7 @@ export class UploadService {
     let userId = localStorage.getItem("userId");
     let formData = new FormData();
     formData.append("userId", userId);
-    if(uploadType == "hdr"){
+    if (uploadType == "hdr") {
       formData.append("improver", file);
       formData.append("type", uploadType);
 
@@ -24,7 +24,7 @@ export class UploadService {
         // headers: { "content-type": "multipart/formd-ata" }
       );
     }
-    if(uploadType == "coloring"){
+    if (uploadType == "coloring") {
       formData.append("color", file);
       formData.append("type", uploadType);
       return this.http.post<any>(

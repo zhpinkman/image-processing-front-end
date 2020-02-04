@@ -20,8 +20,15 @@
           <a mat-button [routerLink]="'/stylechanger'"> تغییر سبک </a>
         </div>
       </div>
-      <div>
-        <span class="logout" (click)="logout()">خروج</span>
+      <div class="d-flex flex-row-reverse align-items-center">
+        <span class="logout mx-4" (click)="logout()">خروج</span>
+        <div class="refresh-icon">
+          <img
+            src="../../assets/images/refresh.png"
+            alt=""
+            (click)="refresh()"
+          />
+        </div>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
