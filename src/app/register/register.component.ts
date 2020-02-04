@@ -8,6 +8,7 @@ import {
 } from "@angular/forms";
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
+import { NotifierService } from "angular-notifier";
 
 @Component({
   selector: "app-register",
@@ -23,7 +24,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notifier: NotifierService
   ) {
     let userId = localStorage.getItem("userId");
     if (userId) this.router.navigate([""]);
@@ -52,6 +54,25 @@ export class RegisterComponent implements OnInit {
     //   "TCL: LoginComponent -> login -> this.loginForm",
     //   this.loginForm
     // );
-    this.authService.register(this.registerForm.getRawValue());
+    this.authService.register(this.registerForm.getRawValue()).subscribe(
+      user => {
+        if (user.success == false) {
+          this.notifier.notify(
+            "error",
+            "something is wrong about your registration form"
+          );
+        }
+        localStorage.setItem("userId", user.user.id);
+        localStorage.setItem("userActive", user.user.isActive);
+        this.notifier.notify("success", "you have been successfully signed up");
+        setTimeout(() => {
+          this.router.navigate([""]);
+        }, 3000);
+      },
+      error => {
+        console.log("TCL: onSubmit -> error", error.error.message);
+        this.notifier.notify("error", error.error.message);
+      }
+    );
   }
 }

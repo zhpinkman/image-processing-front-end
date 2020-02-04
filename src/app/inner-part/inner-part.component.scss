@@ -1,5 +1,16 @@
-.uploadfilecontainer {
+.loading-state {
+  background-color: #d8d8d8;
+  border-color: grey;
+}
+
+.upload-state-background {
   background-image: url("../../assets/images/cloud-upload.png");
+}
+
+.upload-file-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-repeat: no-repeat;
   background-size: 100px;
   background-position: center;
@@ -18,7 +29,7 @@
   margin: 0;
 }
 
-.uploadfilecontainer:hover {
+.upload-file-container:hover {
   cursor: pointer;
   background-color: #9ecbec !important;
   opacity: 0.8;
@@ -78,12 +89,13 @@
   margin: 0 auto;
   align-items: center;
   .upload-image-container {
+    height: 400px;
+    width: 60%;
   }
   .options-container {
   }
 }
 .upload-state {
-  height: 300px;
 }
 
 .image-list {

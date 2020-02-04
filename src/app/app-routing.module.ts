@@ -4,13 +4,19 @@ import { MainComponentComponent } from "./main-component/main-component.componen
 import { InnerPartComponent } from "./inner-part/inner-part.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
-import { ImproverComponent } from "./improver/improver.component";
+import { ActivateComponent } from "./activate/activate.component";
+import { AanComponent } from "./aan/aan.component";
+import { HdrComponent } from "./hdr/hdr.component";
+import { ColorizeComponent } from "./colorize/colorize.component";
 import { AuthGuard } from "./auth.guard";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
-  { path: "improver", component: ImproverComponent, canActivate: [AuthGuard] },
+  { path: "activate", component: ActivateComponent },
+  { path: "aan", component: AanComponent },
+  { path: "hdr", component: HdrComponent, canActivate: [AuthGuard] },
+  { path: "colorize", component: ColorizeComponent, canActivate: [AuthGuard] },
   { path: "**", component: MainComponentComponent, canActivate: [AuthGuard] }
 ];
 

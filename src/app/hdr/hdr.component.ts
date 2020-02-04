@@ -4,20 +4,23 @@ import { ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "app-main-component",
-  templateUrl: "./main-component.component.html",
-  styleUrls: ["./main-component.component.scss"]
+  selector: 'app-hdr',
+  templateUrl: './hdr.component.html',
+  styleUrls: ['./hdr.component.scss']
 })
-export class MainComponentComponent implements OnInit, OnDestroy {
+
+
+export class HdrComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
   fillerNav: { name: string; url: string }[] = [
     { name: "خانه", url: "" },
     { name: "رنگی سازی", url: "/colorize" },
-    { name: "بالا بردن وضوح", url: "/hdr" },
-    { name: "حذف زمینه", url: "bgremover" },
-    { name: "تغییر زمینه", url: "bgchanger" },
-    { name: "حذف اشیا", url: "thingsremover" },
-    { name: "تغییر سبک", url: "stylechanger" }
+    { name: "بالا بردن وضوح", url: "/improver" },
+    { name: "HDR", url: "/hdr" },
+    { name: "حذف زمینه", url: "/bgremover" },
+    { name: "تغییر زمینه", url: "/bgchanger" },
+    { name: "حذف اشیا", url: "/thingsremover" },
+    { name: "تغییر سبک", url: "/stylechanger" }
   ];
 
   pageWidth: any;
@@ -28,7 +31,6 @@ export class MainComponentComponent implements OnInit, OnDestroy {
   }
 
   fillerContent = [];
-
   private _mobileQueryListener: () => void;
 
   constructor(
@@ -52,7 +54,6 @@ export class MainComponentComponent implements OnInit, OnDestroy {
 
   logout() {
     localStorage.removeItem("userId");
-    localStorage.removeItem("userActive");
     this.router.navigate(["login"]);
   }
 }

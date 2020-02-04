@@ -6,10 +6,12 @@ import { HttpClient } from "@angular/common/http";
   providedIn: "root"
 })
 export class PicsService {
+  baseUrl = "http://api.negar.avir.co.com";
+
   constructor(private router: Router, private http: HttpClient) {}
 
   getPics(userId) {
-    return this.http.post<any>("http://89.43.10.90:5000/users/getpics", {
+    return this.http.post<any>(this.baseUrl + "/users/getpics", {
       userId
     });
   }

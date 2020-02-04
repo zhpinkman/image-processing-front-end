@@ -1,0 +1,29 @@
+<div class="container" style="padding-top:10vw">
+  <button type="button" name="button" class="btn btn-primary" (click)="logout()">خروج</button>
+  <div class="row justify-content-md-center">
+    <div class="col-12 col-md-6">
+      <div class="card text-center">
+        <div class="card-header">
+          فعال سازی اکانت
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">کد خود را وارد کنید</h5>
+          <form (ngSubmit)="onSubmit()">
+            <input
+              type="number"
+              class="form-control"
+              (keyup)="onKey($event)"
+            />
+            <p style="color:red;">{{message}}</p>
+            <!-- <button class="btn btn-primary" [disabled]="!getAgain"  style="margin-top:20px">ارسال کد</button> -->
+        </form>
+
+        </div>
+        <div class="card-footer text-muted">
+          {{timer}}<br> ثانیه <br>
+          <button class="btn btn-primary" [disabled]="!getAgain" style="margin-top:20px" (click)="getCode()">گرفتن کد فعال سازی</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

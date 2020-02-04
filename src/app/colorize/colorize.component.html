@@ -6,12 +6,11 @@
   <mat-toolbar color="primary" class="main-toolbar">
     <mat-toolbar-row class="justify-content-between ">
       <div class="d-flex">
-        <button mat-icon-button *ngIf="pageWidth <= 1200">
-          <mat-icon (click)="snav.toggle()">menu</mat-icon>
+        <button mat-icon-button *ngIf="pageWidth <= 1200" (click)="snav.toggle()">
+          <mat-icon >menu</mat-icon>
         </button>
         <span class="menu-spacer"></span>
         <div class="toolbar-links" *ngIf="pageWidth > 1200">
-          <!-- <a mat-button [routerLink]="''"> خانه </a> -->
           <a mat-button [routerLink]="'/colorize'"> رنگی سازی </a>
           <a mat-button [routerLink]="'/hdr'"> بالا بردن وضوح </a>
           <a mat-button [routerLink]="'/bgremover'"> حذف پس‌زمینه </a>
@@ -46,8 +45,9 @@
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content>
-      <app-inner-part uploadType="ermia"></app-inner-part>
+    <mat-sidenav-content style="text-align:right; padding-right: 20px;padding-top:40px">
+      <h4>رنگی سازی</h4>
+      <app-inner-part uploadType="coloring"></app-inner-part>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

@@ -51,8 +51,11 @@ import { NotifierModule, NotifierOptions } from "angular-notifier";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoginComponent } from "./login/login.component";
 import { HttpClientModule } from "@angular/common/http";
-import { RegisterComponent } from './register/register.component';
-import { ImproverComponent } from './improver/improver.component';
+import { RegisterComponent } from "./register/register.component";
+import { HdrComponent } from './hdr/hdr.component';
+import { ColorizeComponent } from './colorize/colorize.component';
+import { ActivateComponent } from './activate/activate.component';
+import { AanComponent } from './aan/aan.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -103,7 +106,10 @@ const customNotifierOptions: NotifierOptions = {
     UploadHandlerDirective,
     LoginComponent,
     RegisterComponent,
-    ImproverComponent
+    HdrComponent,
+    ColorizeComponent,
+    ActivateComponent,
+    AanComponent
   ],
   imports: [
     HttpClientModule,
