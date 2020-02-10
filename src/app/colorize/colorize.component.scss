@@ -42,6 +42,8 @@ h1.app-name {
 }
 
 .refresh-icon {
-  zoom: 4%;
+  transform: scale(0.04);
+
+  transform-origin: 0% 50%;
   cursor: pointer;
 }

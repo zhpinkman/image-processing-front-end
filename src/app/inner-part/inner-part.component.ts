@@ -19,13 +19,17 @@ export class InnerPartComponent implements OnInit {
     private picsService: PicsService
   ) {
     this.picsService.refreshPics.subscribe(refresh => {
-      console.log("TCL: InnerPartComponent ->", "picsReloaded");
-      this.reloadPics();
+      if (this.refreshCount) {
+        console.log("TCL: InnerPartComponent ->", "picsReloaded");
+        this.reloadPics();
+        this.refreshCount = 0;
+      }
     });
   }
 
   @Input() uploadType: string;
 
+  refreshCount = 1;
   loading = false;
   autoTicks = false;
   disabled = false;
@@ -105,7 +109,6 @@ export class InnerPartComponent implements OnInit {
         // document.getElementById('image_preview').
       };
       // this.notifier.notify("success", "Image uploaded successfully");
-      console.log(1);
       console.log(event, this.uploadType);
       if (this.uploadType == "ermia") {
         this.notifier.notify(
@@ -135,6 +138,7 @@ export class InnerPartComponent implements OnInit {
   }
 
   reloadPics() {
+    console.log(1);
     let userId = localStorage.getItem("userId");
     this.picsService.getPics(userId).subscribe(pics => {
       this.images = pics.pics;
@@ -143,6 +147,9 @@ export class InnerPartComponent implements OnInit {
       });
       this.notifier.notify("success", "images have been successfully reloaded");
     });
+    setTimeout(() => {
+      this.refreshCount = 1;
+    }, 3000);
   }
 
   waitForResult() {
