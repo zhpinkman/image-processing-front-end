@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { NotifierService } from "angular-notifier";
 import { ReadVarExpr } from "@angular/compiler";
 import { coerceNumberProperty } from "@angular/cdk/coercion";
@@ -6,30 +6,36 @@ import { UploadService } from "../upload.service";
 import { PicsService } from "../pics.service";
 import { element } from "protractor";
 import { Router } from "@angular/router";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-inner-part",
   templateUrl: "./inner-part.component.html",
   styleUrls: ["./inner-part.component.scss"]
 })
-export class InnerPartComponent implements OnInit {
+export class InnerPartComponent implements OnInit, OnDestroy {
   constructor(
     private notifier: NotifierService,
     private uploadService: UploadService,
     private picsService: PicsService
   ) {
-    this.picsService.refreshPics.subscribe(refresh => {
-      if (this.refreshCount) {
+    console.log("zzz");
+    if (!this.picsService.refreshPics.isStopped)
+      this.picsService.refreshPics.subscribe(refresh => {
         console.log("TCL: InnerPartComponent ->", "picsReloaded");
         this.reloadPics();
-        this.refreshCount = 0;
-      }
-    });
+      });
+    else {
+      this.picsService.refreshPics = new Subject<any>();
+      this.picsService.refreshPics.subscribe(refresh => {
+        console.log("TCL: InnerPartComponent ->", "picsReloaded");
+        this.reloadPics();
+      });
+    }
   }
 
   @Input() uploadType: string;
 
-  refreshCount = 1;
   loading = false;
   autoTicks = false;
   disabled = false;
@@ -147,9 +153,6 @@ export class InnerPartComponent implements OnInit {
       });
       this.notifier.notify("success", "images have been successfully reloaded");
     });
-    setTimeout(() => {
-      this.refreshCount = 1;
-    }, 3000);
   }
 
   waitForResult() {
@@ -212,6 +215,11 @@ export class InnerPartComponent implements OnInit {
     //     }
     //   });
     // }, 20000);
+  }
+
+  ngOnDestroy() {
+    console.log(";lkj");
+    this.picsService.refreshPics.unsubscribe();
   }
 
   downloadFile() {

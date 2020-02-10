@@ -58,5 +58,6 @@ export class HdrComponent implements OnInit, OnDestroy {
   }
   refresh() {
     this.picsService.refreshPics.next(true);
+    console.log(22);
   }
 }

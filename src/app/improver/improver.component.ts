@@ -59,5 +59,6 @@ export class ImproverComponent implements OnInit, OnDestroy {
   }
   refresh() {
     this.picsService.refreshPics.next(true);
+    console.log(22);
   }
 }
