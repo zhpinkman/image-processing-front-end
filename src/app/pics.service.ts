@@ -14,6 +14,7 @@ export class PicsService {
   constructor(private router: Router, private http: HttpClient) {}
 
   getPics(userId) {
+    console.log(userId);
     return this.http.post<any>(this.baseUrl + "/users/getpics", {
       userId
     });

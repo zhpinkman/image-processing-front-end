@@ -2,6 +2,7 @@
 
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~angular-notifier/styles";
+@import "assets/fonts/iransans/style.css";
 // @import "~fortawesome/fontawesome-free/css/all.css";
 
 html,
@@ -11,5 +12,9 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "IRANSans" !important;
+}
+
+* {
+  font-family: "IRANSans" !important;
 }
