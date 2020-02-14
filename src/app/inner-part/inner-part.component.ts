@@ -1,34 +1,33 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
-import { NotifierService } from "angular-notifier";
-import { ReadVarExpr } from "@angular/compiler";
-import { coerceNumberProperty } from "@angular/cdk/coercion";
-import { UploadService } from "../upload.service";
-import { PicsService } from "../pics.service";
-import { element } from "protractor";
-import { Router } from "@angular/router";
-import { Subject } from "rxjs";
+import {coerceNumberProperty} from '@angular/cdk/coercion';
+import {ReadVarExpr} from '@angular/compiler';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NotifierService} from 'angular-notifier';
+import {element} from 'protractor';
+import {Subject} from 'rxjs';
+
+import {PicsService} from '../pics.service';
+import {UploadService} from '../upload.service';
 
 @Component({
-  selector: "app-inner-part",
-  templateUrl: "./inner-part.component.html",
-  styleUrls: ["./inner-part.component.scss"]
+  selector: 'app-inner-part',
+  templateUrl: './inner-part.component.html',
+  styleUrls: ['./inner-part.component.scss']
 })
 export class InnerPartComponent implements OnInit, OnDestroy {
   constructor(
-    private notifier: NotifierService,
-    private uploadService: UploadService,
-    private picsService: PicsService
-  ) {
-    console.log("zzz");
+      private notifier: NotifierService, private uploadService: UploadService,
+      private picsService: PicsService) {
+    console.log('zzz');
     if (!this.picsService.refreshPics.isStopped)
       this.picsService.refreshPics.subscribe(refresh => {
-        console.log("TCL: InnerPartComponent ->", "picsReloaded");
+        console.log('TCL: InnerPartComponent ->', 'picsReloaded');
         this.reloadPics();
       });
     else {
       this.picsService.refreshPics = new Subject<any>();
       this.picsService.refreshPics.subscribe(refresh => {
-        console.log("TCL: InnerPartComponent ->", "picsReloaded");
+        console.log('TCL: InnerPartComponent ->', 'picsReloaded');
         this.reloadPics();
       });
     }
@@ -48,8 +47,8 @@ export class InnerPartComponent implements OnInit, OnDestroy {
   options = new Array<number>(10);
   vertical = false;
 
-  get tickInterval(): number | "auto" {
-    return this.showTicks ? (this.autoTicks ? "auto" : this._tickInterval) : 0;
+  get tickInterval(): number|'auto' {
+    return this.showTicks ? (this.autoTicks ? 'auto' : this._tickInterval) : 0;
   }
   set tickInterval(value) {
     this._tickInterval = coerceNumberProperty(value);
@@ -57,13 +56,12 @@ export class InnerPartComponent implements OnInit, OnDestroy {
   private _tickInterval = 1;
 
   ngOnInit() {
-    let userId = localStorage.getItem("userId");
+    let userId = localStorage.getItem('userId');
     this.picsService.getPics(userId).subscribe(pics => {
       if (!pics.success) {
         this.notifier.notify(
-          "error",
-          "something went wrong getting the previous pics"
-        );
+            'error',
+            '.خطا در برقراری ارتباط برای گرفتن عکس‌های گذشته');
       }
       this.images = pics.pics;
       this.images = this.images.filter(element => {
@@ -80,34 +78,33 @@ export class InnerPartComponent implements OnInit, OnDestroy {
   mouse_on_image = false;
   images: any = [];
   file: any;
-  image_url: String | ArrayBuffer = "";
-  correct_image_types = ["image/jpeg", "image/png"];
+  image_url: String|ArrayBuffer = '';
+  correct_image_types = ['image/jpeg', 'image/png'];
 
   is_file_type_ok(event) {
     if (this.correct_image_types.includes(event.type)) return true;
     this.notifier.notify(
-      "error",
-      "file type is not supported, you can only upload images with "
-    );
+        'error',
+        '.تایپ عکس آپلود‌شده پشتیبانی نمی‌شود');
     return false;
   }
 
   is_file_size_ok(event) {
     if (event.size < 5000000) return true;
     this.notifier.notify(
-      "error",
-      "file size is greater than the allowable file size ( 5 MB )"
-    );
+        'error',
+        '.حجم عکس آپلود‌شده بیشتر از حجم مجاز ۵ مگابایت برای آپلود عکس می‌باشد');
+    return false;
   }
 
   uploadFile(event) {
     if (event) {
-      console.log("test");
+      console.log('test');
       if (!this.is_file_type_ok(event) || !this.is_file_size_ok(event)) return;
       this.loading = true;
       var reader = new FileReader();
 
-      reader.readAsDataURL(event); // read file as data url
+      reader.readAsDataURL(event);  // read file as data url
 
       reader.onload = (event: any) => {
         // called once readAsDataURL is completed
@@ -116,11 +113,9 @@ export class InnerPartComponent implements OnInit, OnDestroy {
       };
       // this.notifier.notify("success", "Image uploaded successfully");
       console.log(event, this.uploadType);
-      if (this.uploadType == "ermia") {
+      if (this.uploadType == 'ermia') {
         this.notifier.notify(
-          "error",
-          "please choose one of the methods for processing your uploaded image first"
-        );
+            'error', '.لطفا یکی از متد ها را قبل از آپلود عکس انتخاب کنید');
         this.loading = false;
         return;
       }
@@ -128,16 +123,12 @@ export class InnerPartComponent implements OnInit, OnDestroy {
         console.log(2);
         if (resp.success) {
           this.notifier.notify(
-            "success",
-            "image uploaded successfully waiting for the result"
-          );
+              'success',
+              '.عکس با موفقیت آپلودشد. برای گرفتن نتیجه منتظر بمانید');
           this.uploadedImageName = event.name;
           this.waitForResult();
         } else if (!resp.success) {
-          this.notifier.notify(
-            "error",
-            "something went wrong in uploading the file"
-          );
+          this.notifier.notify('error', '.آپلود عکس با خطا روبرو گردید');
         }
       });
     }
@@ -145,34 +136,37 @@ export class InnerPartComponent implements OnInit, OnDestroy {
 
   reloadPics() {
     console.log(1);
-    let userId = localStorage.getItem("userId");
+    let userId = localStorage.getItem('userId');
     this.picsService.getPics(userId).subscribe(pics => {
       this.images = pics.pics;
       this.images = this.images.filter(element => {
         return element.isFailed == false && element.isReady == true;
       });
-      this.notifier.notify("success", "images have been successfully reloaded");
+      this.notifier.notify(
+          'success',
+          '.بارگیری مجدد عکس‌ها با موفقیت انجام شد');
     });
   }
 
   waitForResult() {
     let timeOut = setTimeout(() => {
-      let userId = localStorage.getItem("userId");
+      let userId = localStorage.getItem('userId');
       this.picsService.getPics(userId).subscribe(pics => {
         this.images = pics.pics;
         this.images = this.images.filter(element => {
           return element.isFailed == false && element.isReady == true;
         });
-        if (
-          this.images.some(pic => {
-            return pic.originalName == this.uploadedImageName;
-          })
-        )
+        if (this.images.some(pic => {
+              return pic.originalName == this.uploadedImageName;
+            })) {
           this.notifier.notify(
-            "success",
-            "uploaded image have been successfully processed"
-          );
-        this.uploadedImageName = "";
+              'success', '.عکس آپلود شده با موفقیت پردازش گردید');
+        } else {
+          this.notifier.notify(
+              'error',
+              '.پردازش عکس آپلود‌شده با خطلا روبرو گردید');
+        }
+        this.uploadedImageName = '';
         this.loading = false;
       });
     }, 10000);
@@ -218,18 +212,18 @@ export class InnerPartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log(";lkj");
+    console.log(';lkj');
     this.picsService.refreshPics.unsubscribe();
   }
 
   downloadFile() {
-    window.open(<string>this.image_url, "_blank");
+    window.open(<string>this.image_url, '_blank');
   }
 
   getType(type: string) {
-    if (type == "hdr") return "HDR";
-    if (type == "coloring") return "رنگ آمیزی";
-    return "HDR";
+    if (type == 'hdr') return 'HDR';
+    if (type == 'coloring') return 'رنگ آمیزی';
+    return 'HDR';
   }
   // deleteAttachment(index) {
   //   this.files.splice(index, 1);
@@ -245,6 +239,6 @@ export class InnerPartComponent implements OnInit, OnDestroy {
   }
 
   openImage(image) {
-    window.open(image.url.toString(), "_blank");
+    window.open(image.url.toString(), '_blank');
   }
 }
