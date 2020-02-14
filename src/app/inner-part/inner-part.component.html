@@ -2,92 +2,59 @@
 -->
 
 <div class="container">
-  <div
-    class="main-container"
-    [ngClass]="{ 'main-component-upload-state': !image_url }"
-  >
-    <div class="upload-image-container">
-      <div
-        class="upload-file-container"
-        [ngClass]="{
-          'upload-state-background': !loading,
-          'loading-state': loading
-        }"
-        (click)="fileInput.click()"
-        appUploadHandler
-        (onFileDropped)="uploadFile($event[0])"
-      >
-        <mat-spinner *ngIf="loading"></mat-spinner>
-        <input
-          [disabled]="loading"
-          hidden
-          type="file"
-          #fileInput
-          (change)="uploadFile($event.target.files[0])"
-        />
-      </div>
-      <!-- <div *ngIf="loading" class="upload-file-container">
-
-      </div> -->
-      <!-- <div>
-        <div
-          class="image-preview"
-          *ngIf="image_url"
-          (mouseenter)="mouse_enter()"
-          (mouseleave)="mouse_leave()"
-        >
-          <div class="download-btn" *ngIf="mouse_on_image">
-            <a href="{{ image_url }}" download>
-              <img src="../../assets/images/download.png" alt="" />
-            </a>
-          </div>
-          <div [ngClass]="{ 'shadow-on': mouse_on_image }" class="image">
-            <img src="{{ image_url }}" alt="" />
+  <div class="row flex-row-reverse h-100">
+    <div class="col-sm-12 col-md-12 col-lg-6">
+      <div class="main-container">
+        <div class="upload-image-container">
+          <div
+            class="upload-file-container"
+            [ngClass]="{
+              'upload-state-background': !loading,
+              'loading-state': loading
+            }"
+            (click)="fileInput.click()"
+            appUploadHandler
+            (onFileDropped)="uploadFile($event[0])"
+          >
+            <mat-spinner *ngIf="loading"></mat-spinner>
+            <input
+              [disabled]="loading"
+              hidden
+              type="file"
+              #fileInput
+              (change)="uploadFile($event.target.files[0])"
+            />
           </div>
         </div>
-      </div> -->
-      <!-- <div class="files-list" *ngFor="let file of files; let i = index">
-        <p class="file-item-name">{{ file.name }}</p>
-        <button class="delete-file" (click)="deleteAttachment(i)">
-          <img src="../../assets/images/remove.png" />
-        </button>
-      </div> -->
-    </div>
-    <!-- <div class="options-container col-2" *ngIf="image_url">
-      <div *ngFor="let option of options">
-        <mat-slider
-          [disabled]="false"
-          [invert]="true"
-          [max]="max"
-          [min]="min"
-          [step]="step"
-          [thumbLabel]="true"
-          [tickInterval]="tickInterval"
-          [(ngModel)]="option"
-          [vertical]="vertical"
-        >
-        </mat-slider>
       </div>
-    </div> -->
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-6">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <p>
+          test test test test test test test test test test test test test test
+          test test test test test test test test test test test test test test
+          test test
+        </p>
+      </div>
+    </div>
   </div>
-  <!-- (click)="openImage(image)" -->
   <div class="row">
-    <div
-      class="col-md-4"
-      *ngFor="let image of images"
-    >
-    <div class="card">
-      <div class="card-header" style="background-color:#3f51b5;text-align: center;color:white">
-        {{getType(image.type)}}
+    <div class="col-md-4" *ngFor="let image of images">
+      <div class="card">
+        <div
+          class="card-header"
+          style="background-color:#3f51b5;text-align: center;color:white"
+        >
+          {{ getType(image.type) }}
+        </div>
+        <img src="{{ image.url }}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <p class="card-text">{{ image.originalName }}</p>
+        </div>
+        <div class="card-footer text-muted" style="text-align:center">
+          <a href="{{ image.url }}" target="_blank">دانلود</a>
+        </div>
       </div>
-      <img src="{{ image.url }}" class="card-img-top" alt="..." >
-      <div class="card-body">
-        <p class="card-text">{{ image.originalName }}</p>
-      </div>
-      <div class="card-footer text-muted" style="text-align:center">
-        <a href="{{ image.url }}" target="_blank" >دانلود</a>
-      </div>
-    </div>
       <!-- <div class="image-card ">
         <div class="image-img">
           <img src="{{ image.url }}" alt="" />

@@ -78,7 +78,7 @@ export class InnerPartComponent implements OnInit, OnDestroy {
   mouse_on_image = false;
   images: any = [];
   file: any;
-  image_url: String|ArrayBuffer = '';
+  // image_url: String|ArrayBuffer = '';
   correct_image_types = ['image/jpeg', 'image/png'];
 
   is_file_type_ok(event) {
@@ -108,7 +108,7 @@ export class InnerPartComponent implements OnInit, OnDestroy {
 
       reader.onload = (event: any) => {
         // called once readAsDataURL is completed
-        this.image_url = event.target.result;
+        // this.image_url = event.target.result;
         // document.getElementById('image_preview').
       };
       // this.notifier.notify("success", "Image uploaded successfully");
@@ -216,9 +216,9 @@ export class InnerPartComponent implements OnInit, OnDestroy {
     this.picsService.refreshPics.unsubscribe();
   }
 
-  downloadFile() {
-    window.open(<string>this.image_url, '_blank');
-  }
+  // downloadFile() {
+  //   window.open(<string>this.image_url, '_blank');
+  // }
 
   getType(type: string) {
     if (type == 'hdr') return 'HDR';
@@ -227,8 +227,8 @@ export class InnerPartComponent implements OnInit, OnDestroy {
   }
   // deleteAttachment(index) {
   //   this.files.splice(index, 1);
-  //   this.image_url = "";
-  //   this.notifier.notify("success", "Image removed successfully");
+  //   this.image_url = '';
+  //   this.notifier.notify('success', 'Image removed successfully');
   // }
 
   mouse_enter() {
