@@ -137,3 +137,23 @@
     }
   }
 }
+
+.change-preview {
+  width: 1136px;
+  height: 750px;
+  position: relative;
+  .before-image {
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    // width: ;
+  }
+
+  .after-image {
+    width: 50%;
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+  }
+}

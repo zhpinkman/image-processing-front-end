@@ -1,29 +1,21 @@
 <!-- <mat-spinner></mat-spinner>
 -->
 
+
+
+
 <div class="container">
+
   <div class="row flex-row-reverse h-100">
     <div class="col-sm-12 col-md-12 col-lg-6">
       <div class="main-container">
         <div class="upload-image-container">
-          <div
-            class="upload-file-container"
-            [ngClass]="{
+          <div class="upload-file-container" [ngClass]="{
               'upload-state-background': !loading,
               'loading-state': loading
-            }"
-            (click)="fileInput.click()"
-            appUploadHandler
-            (onFileDropped)="uploadFile($event[0])"
-          >
+            }" (click)="fileInput.click()" appUploadHandler (onFileDropped)="uploadFile($event[0])">
             <mat-spinner *ngIf="loading"></mat-spinner>
-            <input
-              [disabled]="loading"
-              hidden
-              type="file"
-              #fileInput
-              (change)="uploadFile($event.target.files[0])"
-            />
+            <input [disabled]="loading" hidden type="file" #fileInput (change)="uploadFile($event.target.files[0])" />
           </div>
         </div>
       </div>
@@ -38,13 +30,20 @@
       </div>
     </div>
   </div>
+
+  <div class="change-preview" *ngIf="changePreview">
+    <div class="before-image">
+      <img src="{{ uploadedImage.url }}" alt="">
+    </div>
+    <div class="after-image">
+      <img src="{{ imageUrl }}" alt="">
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-md-4" *ngFor="let image of images">
       <div class="card">
-        <div
-          class="card-header"
-          style="background-color:#3f51b5;text-align: center;color:white"
-        >
+        <div class="card-header" style="background-color:#3f51b5;text-align: center;color:white">
           {{ getType(image.type) }}
         </div>
         <img src="{{ image.url }}" class="card-img-top" alt="..." />
